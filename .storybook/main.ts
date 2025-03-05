@@ -2,8 +2,8 @@ import type { StorybookConfig } from '@storybook/web-components-vite';
 
 const config: StorybookConfig = {
   "stories": [
-    "../src/components/*.stories.@(js|jsx|ts|tsx)",
-    "../src/**/*.mdx",
+    //"../src/components/*.stories.@(js|jsx|ts|tsx)",
+    //"../src/**/*.mdx",
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],
   "addons": [
@@ -18,6 +18,9 @@ const config: StorybookConfig = {
   },
   core: {
     builder: '@storybook/builder-vite',
+  },
+  docs: {
+    defaultName: 'Documentation',
   },
 };
 export default config;

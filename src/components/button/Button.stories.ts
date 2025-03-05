@@ -48,6 +48,6 @@ export const Secondary: Story = {
 export const Small: Story = {
   args: {
     size: 'small',
-    label: 'Small Button',
+    label: 'Sign out',
   },
 };
