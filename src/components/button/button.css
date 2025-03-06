@@ -1,0 +1,63 @@
+/* button.css */
+.button {
+    display: inline-block;
+    cursor: pointer;
+    border: 0;
+    border-radius: 5px;
+    font-weight: 700;
+    line-height: 1;
+    font-family: 'Inter', sans-serif;
+    padding: 10px 20px; /* Adicionado padding padrão */
+  }
+  
+    /* Estilos para o botão primário */
+  .button--primary {
+    background-color: #0066ff;
+    color: white;
+  }
+
+  .button--primary:hover {
+    background-color: #0056b3;
+  }
+
+  .button--primary:active {
+    background-color: #004080;
+  }
+
+  /* Estilos para o botão secundário */
+  .button--secondary {
+    background-color: #f3f3f3;
+    color: #333;
+    border: 1px solid #ccc;
+  }
+
+  .button--secondary:hover {
+    background-color: #e0e0e0;
+  }
+
+  .button--secondary:active {
+    background-color: #d0d0d0;
+  }
+
+  /* Estilos para tamanhos */
+  .button--small {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
+
+  .button--medium {
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .button--large {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+
+  /* Estilos para estado desabilitado */
+  .button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    color: #888888;
+  }
