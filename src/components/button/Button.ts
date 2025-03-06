@@ -33,6 +33,14 @@ export class Button extends LitElement {
       color: #888888;
     }
 
+    /* Estilos para o botão secundário */
+    .button--secondary {
+      background-color: #f3f3f3;
+      width: 98px;
+      height: 37px;
+      color: #333;
+    }
+
     /* Estilos para tamanhos */
     .button--small {
       font-size: 12px;
@@ -43,13 +51,21 @@ export class Button extends LitElement {
       font-size: 14px;
       padding: 10px 20px;
     }
-
   `;
 
+  /** Define se o botão é primário ou secundário */
   @property({ type: Boolean }) primary = false;
+
+  /** Define a cor de fundo do botão */
   @property({ type: String }) backgroundColor = '';
+
+  /** Define o tamanho do botão */
   @property({ type: String }) size: 'small' | 'medium' | 'large' = 'medium';
+
+  /** Define o texto do botão */
   @property({ type: String }) label = 'Button';
+
+  /** Função chamada ao clicar no botão */
   @property({ type: Function }) onClick?: () => void;
 
   render() {
