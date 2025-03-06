@@ -41,6 +41,7 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     primary: false,
+    backgroundColor: 'green',
     label: 'Sign Up',
   },
 };
@@ -48,6 +49,7 @@ export const Secondary: Story = {
 export const Small: Story = {
   args: {
     size: 'small',
+    backgroundColor: 'red',
     label: 'Sign out',
   },
 };
