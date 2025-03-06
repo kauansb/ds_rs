@@ -6,13 +6,13 @@ import buttonStyles from './button.css?inline'; // Importação do CSS como stri
 export class Button extends LitElement {
   static styles = [unsafeCSS(buttonStyles)]; // Injeta o CSS no Shadow DOM
   /** Define se o botão é primário ou secundário */
-  @property({ type: Boolean }) primary = false;
+  @property({ type: Boolean }) primary? = false;
 
   /** Define a cor de fundo do botão */
-  @property({ type: String }) backgroundColor = '';
+  @property({ type: String }) backgroundColor? = '';
 
   /** Define o tamanho do botão */
-  @property({ type: String }) size: 'small' | 'medium' | 'large' = 'medium';
+  @property({ type: String }) size?: 'small' | 'medium' | 'large' = 'medium';
 
   /** Define o texto do botão */
   @property({ type: String }) label = 'Button';
@@ -22,7 +22,7 @@ export class Button extends LitElement {
 
   render() {
     const mode = this.primary ? 'button--primary' : 'button--secondary';
-    const classes = ['button', `button--${this.size}`, mode].join(' ');
+    const classes = ['button', `button--${this.size || 'medium'}`, mode].join(' ');
 
     return html`
       <button

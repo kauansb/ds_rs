@@ -6,6 +6,9 @@ import './Button';
 const meta = {
   title: 'Components/Button',
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
   render: (args) => html`
     <ds-button
       primary=${args.primary}
@@ -63,9 +66,7 @@ export const Primary: Story = {
 
 /** Botão secundário */
 export const Secondary: Story = {
-  args: {
-    primary: false,
-    backgroundColor: 'green',
+  args: { 
     label: 'Sign Up',
   },
 };
@@ -74,7 +75,6 @@ export const Secondary: Story = {
 export const Small: Story = {
   args: {
     size: 'small',
-    backgroundColor: 'red',
     label: 'Sign out',
   },
 };
