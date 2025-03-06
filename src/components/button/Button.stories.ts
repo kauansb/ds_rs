@@ -11,44 +11,46 @@ const meta = {
   },
   render: (args) => html`
     <ds-button
-      primary=${args.primary}
+      variant=${args.variant}
       backgroundColor=${args.backgroundColor}
       size=${args.size}
       label=${args.label}
+      ?disabled=${args.disabled}
       @click=${args.onClick}
     ></ds-button>
   `,
   argTypes: {
-    /** Define se o botão é primário ou secundário */
-    primary: {
-      control: 'boolean',
+    variant: {
+      control: { type: 'radio' },
+      options: ['primary', 'secondary'],
       description: 'Define se o botão é primário ou secundário',
     },
-    /** Define a cor de fundo do botão */
     backgroundColor: {
       control: 'color',
       description: 'Define a cor de fundo do botão',
     },
-    /** Define o tamanho do botão */
     size: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
       description: 'Define o tamanho do botão',
     },
-    /** Define o texto do botão */
     label: {
       control: 'text',
       description: 'Define o texto do botão',
     },
-    /** Função chamada ao clicar no botão */
+    disabled: {
+      control: 'boolean',
+      description: 'Define se o botão está desabilitado',
+    },
     onClick: {
       action: 'clicked',
       description: 'Função chamada ao clicar no botão',
     },
   },
   args: {
-    primary: false,
+    variant: 'primary',
     label: 'Button',
+    disabled: false,
     onClick: fn(),
   },
 } satisfies Meta;
@@ -59,14 +61,15 @@ type Story = StoryObj;
 /** Botão primário */
 export const Primary: Story = {
   args: {
-    primary: true,
+    variant: 'primary',
     label: 'Login',
   },
 };
 
 /** Botão secundário */
 export const Secondary: Story = {
-  args: { 
+  args: {
+    variant: 'secondary',
     label: 'Sign Up',
   },
 };
@@ -91,7 +94,23 @@ export const CustomBackground: Story = {
 export const Disabled: Story = {
   args: {
     label: 'Disabled',
-    onClick: () => alert('Este botão está desabilitado!'),
     disabled: true,
+  },
+};
+
+/** Botão com tema escuro */
+export const DarkTheme: Story = {
+  args: {
+    variant: 'primary',
+    label: 'Dark Theme',
+  },
+  parameters: {
+    themes: {
+      default: 'dark',
+      list: [
+        { name: 'light', class: '', color: '#ffffff' },
+        { name: 'dark', class: 'dark-theme', color: '#333333' },
+      ],
+    },
   },
 };

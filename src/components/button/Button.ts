@@ -1,28 +1,34 @@
 import { LitElement, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import buttonStyles from './button.css?inline'; // Importação do CSS como string
+import buttonStyles from './button.css?inline';
 
 @customElement('ds-button')
 export class Button extends LitElement {
-  static styles = [unsafeCSS(buttonStyles)]; // Injeta o CSS no Shadow DOM
-  /** Define se o botão é primário ou secundário */
-  @property({ type: Boolean }) primary? = false;
+  static styles = [unsafeCSS(buttonStyles)];
 
-  /** Define a cor de fundo do botão */
+  /** Variantes do botão: primary (padrão) ou secondary */
+  @property({ type: String }) variant: 'primary' | 'secondary' = 'primary';
   @property({ type: String }) backgroundColor? = '';
-
-  /** Define o tamanho do botão */
-  @property({ type: String }) size?: 'small' | 'medium' | 'large' = 'medium';
-
-  /** Define o texto do botão */
+  @property({ type: String }) size: 'small' | 'medium' | 'large' = 'medium';
   @property({ type: String }) label = 'Button';
-
-  /** Função chamada ao clicar no botão */
+  @property({ type: Boolean }) disabled = false;
   @property({ type: Function }) onClick?: () => void;
 
+  private validateSize(size: string): 'small' | 'medium' | 'large' {
+    if (!['small', 'medium', 'large'].includes(size)) {
+      console.warn(`Invalid size: ${size}. Defaulting to 'medium'.`);
+      return 'medium';
+    }
+    return size as 'small' | 'medium' | 'large';
+  }
+
   render() {
-    const mode = this.primary ? 'button--primary' : 'button--secondary';
-    const classes = ['button', `button--${this.size || 'medium'}`, mode].join(' ');
+    const validatedSize = this.validateSize(this.size);
+    const classes = [
+      'button',
+      `button--${validatedSize}`,
+      `button--${this.variant}`,
+    ].join(' ');
 
     return html`
       <button
@@ -30,6 +36,9 @@ export class Button extends LitElement {
         class=${classes}
         style=${this.backgroundColor ? `background-color: ${this.backgroundColor}` : ''}
         @click=${this.onClick}
+        ?disabled=${this.disabled}
+        aria-label=${this.label}
+        aria-disabled=${this.disabled}
       >
         ${this.label}
       </button>
