@@ -9,6 +9,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # Permite fazer push de arquivos
+      pages: write     # Permite publicar no GitHub Pages
+      id-token: write  # Permite autenticação OIDC (opcional)
+
     steps:
       # Passo 1: Checkout do repositório
       - name: Checkout repository
@@ -20,17 +25,26 @@ jobs:
         with:
           node-version: 18
 
-      # Passo 3: Instalar dependências
+      # Passo 3: Cache de dependências
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
+
+      # Passo 4: Instalar dependências
       - name: Install dependencies
         run: npm install --frozen-lockfile
 
-      # Passo 4: Build do Storybook
+      # Passo 5: Build do Storybook
       - name: Build Storybook
         run: npm run build-storybook
 
-      # Passo 5: Publicar no GitHub Pages
+      # Passo 6: Verificar o build
+      - name: Verify build
+        run: ls -R ./storybook-static
+
+      # Passo 7: Publicar no GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static  # Diretório de build do Storybook
