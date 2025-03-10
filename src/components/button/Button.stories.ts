@@ -97,20 +97,3 @@ export const Disabled: Story = {
     disabled: true,
   },
 };
-
-/** Botão com tema escuro */
-export const DarkTheme: Story = {
-  args: {
-    variant: 'primary',
-    label: 'Dark Theme',
-  },
-  parameters: {
-    themes: {
-      default: 'dark',
-      list: [
-        { name: 'light', class: '', color: '#ffffff' },
-        { name: 'dark', class: 'dark-theme', color: '#333333' },
-      ],
-    },
-  },
-};

@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/web-components'
-import  docTemplate  from './docTemplate.mdx';
+
+import docTemplate from './docTemplate.mdx';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 
 const preview: Preview = {
   parameters: {
@@ -21,6 +23,10 @@ const preview: Preview = {
           orderedList: false,
         },
       },
+    },
+    viewport: {
+      viewports: INITIAL_VIEWPORTS,
+      defaultViewport: 'ipad',
     },
   },
 };
