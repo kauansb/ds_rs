@@ -22,15 +22,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
           cache: 'npm'
 
       # Passo 3: Instalar dependências
       - name: Install dependencies
         run: npm install --legacy-peer-deps # Isso evita conflitos de dependências do Storybook
-      
-      - name: Check Storybook CLI
-        run: npx build-storybook --version
 
       # Passo 4: Build do Storybook
       - name: Build Storybook with Docs
