@@ -27,11 +27,14 @@ jobs:
 
       # Passo 3: Instalar dependências
       - name: Install dependencies
-        run: npm ci  # Garante instalação mais estável
+        run: npm install --legacy-peer-deps # Isso evita conflitos de dependências do Storybook
+      
+      - name: Check Storybook CLI
+        run: npx build-storybook --version
 
       # Passo 4: Build do Storybook
       - name: Build Storybook with Docs
-        run: npm run build-storybook-docs
+        run: npx build-storybook -s public --docs
 
       # Passo 5: Verificar o build
       - name: Verify build
