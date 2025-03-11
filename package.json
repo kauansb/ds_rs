@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build-storybook-docs": "build-storybook -s public --docs"
+    "build-storybook-docs": "storybook build -s public --docs"
   },
   "dependencies": {
     "lit": "^3.2.1"
