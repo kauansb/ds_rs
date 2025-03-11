@@ -31,7 +31,7 @@ jobs:
 
       # Passo 4: Build do Storybook
       - name: Build Storybook with Docs
-        run: npx build-storybook
+        run: npx storybook build
 
       # Passo 5: Verificar o build
       - name: Verify build
