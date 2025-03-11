@@ -5,46 +5,42 @@ on:
     branches:
       - main  # Executa o pipeline quando houver push na branch main
 
+permissions:
+  contents: write  # Permite fazer push de arquivos
+  pages: write     # Permite publicar no GitHub Pages
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write  # Permite fazer push de arquivos
-      pages: write     # Permite publicar no GitHub Pages
-      id-token: write  # Permite autenticação OIDC (opcional)
 
     steps:
       # Passo 1: Checkout do repositório
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Passo 2: Configurar Node.js
+      # Passo 2: Configurar Node.js e cache
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
 
-      # Passo 3: Cache de dependências
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-
-
-      # Passo 4: Instalar dependências
+      # Passo 3: Instalar dependências
       - name: Install dependencies
-        run: npm install --frozen-lockfile
+        run: npm ci  # Garante instalação mais estável
 
-      # Passo 5: Build do Storybook
-      - name: Build Storybook
-        run: npm run build-storybook
+      # Passo 4: Build do Storybook
+      - name: Build Storybook with Docs
+        run: npm run build-storybook-docs
 
-      # Passo 6: Verificar o build
+      # Passo 5: Verificar o build
       - name: Verify build
         run: ls -R ./storybook-static
 
-      # Passo 7: Publicar no GitHub Pages
+      # Passo 6: Deploy para GitHub Pages
       - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Publica no branch gh-pages
+          folder: storybook-static  # Define a pasta de deploy
+          clean: true  # Remove arquivos antigos antes do novo deploy
