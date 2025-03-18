@@ -4,7 +4,7 @@ import { fn } from '@storybook/test';
 import './Button';
 
 const meta = {
-  title: 'Components/Button',
+  title: 'Design System/Components/Button',
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
