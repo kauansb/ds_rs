@@ -257,7 +257,7 @@ Unable to find an `+(n===!1?"accessible ":"")+'element with the role "'+t+'"'+u+
       >
         ${this.label}
       </button>
-    `}};_t.styles=[Yy(wI)];rr([Ir({type:String})],_t.prototype,"variant",2);rr([Ir({type:String})],_t.prototype,"backgroundColor",2);rr([Ir({type:String})],_t.prototype,"size",2);rr([Ir({type:String})],_t.prototype,"label",2);rr([Ir({type:Boolean})],_t.prototype,"disabled",2);rr([Ir({type:Function})],_t.prototype,"onClick",2);_t=rr([gI("ds-button")],_t);const Y2={title:"Components/Button",tags:["autodocs"],parameters:{layout:"centered"},render:e=>tp`
+    `}};_t.styles=[Yy(wI)];rr([Ir({type:String})],_t.prototype,"variant",2);rr([Ir({type:String})],_t.prototype,"backgroundColor",2);rr([Ir({type:String})],_t.prototype,"size",2);rr([Ir({type:String})],_t.prototype,"label",2);rr([Ir({type:Boolean})],_t.prototype,"disabled",2);rr([Ir({type:Function})],_t.prototype,"onClick",2);_t=rr([gI("ds-button")],_t);const Y2={title:"Design System/Components/Button",tags:["autodocs"],parameters:{layout:"centered"},render:e=>tp`
     <ds-button
       variant=${e.variant}
       backgroundColor=${e.backgroundColor}
