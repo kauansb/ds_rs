@@ -3,44 +3,74 @@ name: Deploy Storybook to GitHub Pages
 on:
   push:
     branches:
-      - main  # Executa o pipeline quando houver push na branch main
+      - main
+  # Adicionar suporte para execução manual
+  workflow_dispatch:
 
 permissions:
-  contents: write  # Permite fazer push de arquivos
-  pages: write     # Permite publicar no GitHub Pages
+  contents: write
+  pages: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    
+    # Adicionar environment para melhor organização
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      # Passo 1: Checkout do repositório
       - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Passo 2: Configurar Node.js e cache
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/checkout@v4 # Atualizado para v4
         with:
-          node-version: 22
+          fetch-depth: 0 # Importante para histórico completo
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22' # Usando LTS atual
           cache: 'npm'
 
-      # Passo 3: Instalar dependências
+      # Melhor cache de dependências
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
-        run: npm install --legacy-peer-deps # Isso evita conflitos de dependências do Storybook
+        run: npm ci # Usando ci ao invés de install para maior consistência
 
-      # Passo 4: Build do Storybook
-      - name: Build Storybook with Docs
-        run: npx storybook build
+      # Adicionando lint
+      #- name: Lint check
+      #  run: npm run lint || echo "No lint configured"
 
-      # Passo 5: Verificar o build
-      - name: Verify build
-        run: ls -R ./storybook-static
+      - name: Build Storybook
+        run: npm run build-storybook || npx storybook build
 
-      # Passo 6: Deploy para GitHub Pages
+      # Validação do build
+      - name: Validate build
+        run: |
+          if [ ! -d "storybook-static" ]; then
+            echo "Storybook build failed - directory not found"
+            exit 1
+          fi
+          if [ ! -f "storybook-static/index.html" ]; then
+            echo "index.html not found in build"
+            exit 1
+          fi
+
+      # Deploy para GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # Publica no branch gh-pages
-          folder: storybook-static  # Define a pasta de deploy
-          clean: true  # Remove arquivos antigos antes do novo deploy
+          branch: gh-pages
+          folder: storybook-static
+          clean: true
+          clean-exclude: |
+            .nojekyll
